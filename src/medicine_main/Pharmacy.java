@@ -5,28 +5,27 @@
  */
 package medicine_main;
 
-import static medicine_main.Medicine_Main.med;
-import static medicine_main.Medicine_Main.orderNum;
-import static medicine_main.Medicine_Main.receipt;
-import static medicine_main.Medicine_Main.user;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-/**
- *
- * @author 2ndyrGroupB
- */
-public class funtionalities {
+public class Pharmacy extends MedStorage {
 
-    public static String input(String label) {
+    double payables = 0;
+    public List<Medicine> receipt = new ArrayList<Medicine>();
+    public Scanner user = new Scanner(System.in);
+
+    public String input(String label) {
         System.out.print(label + ": ");
         return user.next();
     }
 
-    public static int inputInt(String label) {
+    public int inputInt(String label) {
         System.out.print(label + ": ");
         return user.nextInt();
     }
 
-    public static String addRole(String label) {
+    public String addRole(String label) {
         if (label.equalsIgnoreCase("1")) {
             return "Admin";
         }
@@ -34,7 +33,7 @@ public class funtionalities {
 
     }
 
-    public static void show(String illness) {
+    public void show(String illness) {
         System.out.printf("%30s %5s %20s %5s %20s %5s %15s %5s", "Medicine Name", "|", "Brand Name", "|", "Generic Name", "|", "Price", "\n");
         for (int i = 0; i < med.size(); ++i) {
             Medicine current = med.get(i);
@@ -44,34 +43,38 @@ public class funtionalities {
         }
     }
 
-    public static void addMedicine(String illness) {
+    public void addMedicine(String illness) {
         if (illness.equalsIgnoreCase("cough") || illness.equalsIgnoreCase("allergies") || illness.equalsIgnoreCase("body pain") || illness.equalsIgnoreCase("headache")) {
-            med.add(new Medicine(input("Medicine Name: "), input("Brand Name: "), input("Generic Name: "), inputInt("price: "), illness));
+            storeMedicine(new Medicine(input("Medicine Name: "), input("Brand Name: "), input("Generic Name: "), inputInt("price: "), illness));
         } else {
             System.out.println("\nNo Storage for that medicine\n");
         }
     }
 
-    public static void showPurchase(String name) {
+    public void showPurchase(String name) {
+        System.out.println("\n--------------------------***********************************Your Order***********************************--------------------------\n");
         System.out.printf("%30s %5s %20s %5s %20s %5s %15s %5s", "Medicine Name", "|", "Brand Name", "|", "Generic Name", "|", "Price", "\n");
         for (int i = 0; i < med.size(); ++i) {
             Medicine current = med.get(i);
             if (current.getMedDiscription().equalsIgnoreCase(name)) {
-                System.out.println(current);
                 receipt.add(current);
+                System.out.println(current);
             }
         }
+        System.out.println("\n**********************************************************************************************************************************\n");
     }
 
-    public static void printReceipt() {
+    public void payable(int orderNum, String order) {
+        payables += ((receipt.get(med.indexOf(order)).getMedprice() * orderNum));
+
+    }
+
+    public void printReceipt() {
         if (!receipt.isEmpty()) {
             System.out.println("-----------------------------------------------------Receipt------------------------------------------------");
             System.out.printf("%30s %5s %20s %5s %20s %5s %15s %5s", "Medicine Name", "|", "Brand Name", "|", "Generic Name", "|", "Price", "\n");
-            double payables = 0;
             for (int i = 0; i < receipt.size(); ++i) {
                 System.out.println(receipt.get(i));
-                payables += ((receipt.get(i).getMedprice() * orderNum));
-                System.out.println(receipt.get(i).getMedprice());
             }
             receipt.clear();
             System.out.println("\nTotal Payables(Pesos): " + payables);
@@ -81,17 +84,15 @@ public class funtionalities {
         }
     }
 
-    public static void printReceiptDiscounted() {
+    public void printReceiptDiscounted() {
         if (!receipt.isEmpty()) {
-            System.out.println("-----------------------------------------------------Receipt------------------------------------------------");
+            System.out.println("\n-----------------------------------------------------Receipt------------------------------------------------");
             System.out.printf("%30s %5s %20s %5s %20s %5s %15s %5s", "Medicine Name", "|", "Brand Name", "|", "Generic Name", "|", "Price", "\n");
-            double payables = 0;
             for (int i = 0; i < receipt.size(); ++i) {
                 System.out.println(receipt.get(i));
-                payables += ((receipt.get(i).getMedprice() * orderNum));
             }
-            System.out.println("\nTotal Payables(Pesos): " + (payables - (payables * 0.15)));
-            System.out.println("------------------------------------END OF TRANSACTION  |||||326548445678----------------------------------------------------\n");
+            System.out.println("\nTotal Payables(Pesos): " + (payables - (payables * 0.20)) + "            -----------discounted");
+            System.out.println("------------------------------------END OF TRANSACTION  |||||9627318467----------------------------------\n\n");
         } else {
             System.out.println("Thank You!!!");
         }
