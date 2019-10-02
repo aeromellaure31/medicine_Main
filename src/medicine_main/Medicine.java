@@ -2,11 +2,11 @@
 package medicine_main;
 
 public class Medicine {
-    String MedDiscription;
-    String GenericName;
-    String BrandName;
-    double Medprice;
-    String illness;
+    private String MedDiscription;
+    private String GenericName;
+    private String BrandName;
+    private double Medprice;
+    private String illness;
 
     public Medicine( String MedDiscription,String GenericName, String BrandName, double Medprice, String illness) {
         this.GenericName = GenericName;
@@ -14,7 +14,7 @@ public class Medicine {
         this.MedDiscription = MedDiscription;
         this.Medprice = Medprice;
         this.illness = illness;
-    }
+    } 
 
     public String getGenericName() {
         return GenericName;

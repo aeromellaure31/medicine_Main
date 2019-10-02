@@ -14,7 +14,7 @@ public class Medicine_Main {
         pharma.storeMedicine(new Medicine("Ambroxol", "Ambroxol HCI", "RiteMed", 100, "Cough"));
         pharma.storeMedicine(new Medicine("Ambrolex-Syrup", "Ambroxol", "Ambrolex", 100, "Cough"));
         pharma.storeMedicine(new Medicine("Prolix-Suspension", "Prednisone", "Prolix", 100, "Allergies"));
-        pharma.storeMedicine(new Medicine("Prolix-Suspension", "Prednisone", "Prolix", 100, "Allergies"));
+        pharma.storeMedicine(new Medicine("Solcoseryl-Ointment", "Solcoseryl", "Deproteinized", 100, "Allergies"));
         pharma.storeMedicine(new Medicine("Prolix-Suspension", "Prednisone", "Prolix", 100, "Allergies"));
         pharma.storeMedicine(new Medicine("Prolix", "Prednisone", "Prolix", 100, "Body Pain"));
         pharma.storeMedicine(new Medicine("Prolix-Suspension", "Prednisone", "Prolix", 100, "Body Pain"));

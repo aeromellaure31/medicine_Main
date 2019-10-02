@@ -15,9 +15,9 @@ public class Pharmacy extends MedStorage implements myMethods{
     Account account;
     public Register register = new Register();
     double payables = 0;
-    public List<Medicine> receipt = new ArrayList<Medicine>();
-    public HashMap<String, Integer> quantity = new HashMap<String, Integer>();
-    public Scanner user = new Scanner(System.in);
+    private List<Medicine> receipt = new ArrayList<Medicine>();
+    private HashMap<String, Integer> quantity = new HashMap<String, Integer>();
+    private Scanner user = new Scanner(System.in);
 
     @Override
     public String input(String label) {
@@ -42,8 +42,8 @@ public class Pharmacy extends MedStorage implements myMethods{
 
     public void show(String illness) {
         System.out.printf("%30s %5s %20s %5s %20s %5s %15s %5s", "Medicine Name", "|", "Brand Name", "|", "Generic Name", "|", "Price", "\n");
-        for (int i = 0; i < med.size(); ++i) {
-            Medicine current = med.get(i);
+        for (int i = 0; i < getMed().size(); ++i) {
+            Medicine current = getMed().get(i);
             if (current.getIllness().equalsIgnoreCase(illness)) {
                 System.out.println(current);
             }
@@ -61,8 +61,8 @@ public class Pharmacy extends MedStorage implements myMethods{
     public void showPurchase(String name) {
         System.out.println("\n--------------------------***********************************Your Order***********************************--------------------------\n");
         System.out.printf("%30s %5s %20s %5s %20s %5s %15s %5s", "Medicine Name", "|", "Brand Name", "|", "Generic Name", "|", "Price", "\n");
-        for (int i = 0; i < med.size(); ++i) {
-            Medicine current = med.get(i);
+        for (int i = 0; i < getMed().size(); ++i) {
+            Medicine current = getMed().get(i);
             if (current.getMedDiscription().equalsIgnoreCase(name)) {
                 receipt.add(current);
                 System.out.println(current);
@@ -72,9 +72,9 @@ public class Pharmacy extends MedStorage implements myMethods{
     }
 
     public void payable(int orderNum, String order) {
-        for (int i = 0; i < med.size() - 1; ++i) {
-            if (med.get(i).getMedDiscription().equals(order)) {
-                payables += ((med.get(i).getMedprice() * orderNum));
+        for (int i = 0; i < getMed().size() - 1; ++i) {
+            if (getMed().get(i).getMedDiscription().equals(order)) {
+                payables += ((getMed().get(i).getMedprice() * orderNum));
             }
         }
 
@@ -112,8 +112,8 @@ public class Pharmacy extends MedStorage implements myMethods{
     public void increment() {
         register.addUser(new Account("Costumer", "Aero", "Laure", 20, "aero", "mel"));
         register.addUser(new Account("Admin", "Aero", "Laure", 20, "admin", "admin"));
-        for (int i = 0; i < med.size(); ++i) {
-            quantity.put(med.get(i).getMedDiscription(), 12);
+        for (int i = 0; i < getMed().size(); ++i) {
+            quantity.put(getMed().get(i).getMedDiscription(), 12);
         }
     }
 
@@ -122,7 +122,7 @@ public class Pharmacy extends MedStorage implements myMethods{
         boolean idn = true;
         Account currentUser = null;
         while (idn) {
-            String choice = input("Press 1 to Register \nPress 2 to login\nPress 3 to Logout\nChoice");
+            String choice = input("Press 1 to Register \nPress 2 to login\nPress 3 to Exit\nChoice");
             if (choice.equals("1")) {
                 register.toRegister();
             } else if (choice.equals("2")) {
@@ -131,14 +131,14 @@ public class Pharmacy extends MedStorage implements myMethods{
                 String LoginpassWord = input("Password");
                 System.out.println("");
 
-                for (int i = 0; i < register.registered.size(); ++i) {
-                    Account acc = register.registered.get(i);
+                for (int i = 0; i < register.getRegistered().size(); ++i) {
+                    Account acc = register.getRegistered().get(i);
                     if (LoginuserName.equals(acc.getUsername()) && LoginpassWord.equals(acc.getPassword())) {
                         System.out.println("Welcome to Laure's Medic " + acc.getFirstname());
                         currentUser = acc;
                         String mainFuntion = "0";
                         while (mainFuntion != "5") {
-                            mainFuntion = input("\n\nPress 1 View Medicine\nPress 2 Medicine Inventory(Admin)\nPress 3 Order Medicine\nPress 4 Add Medicine(Admin)\nPress 5 Exit\n");
+                            mainFuntion = input("\n\nPress 1 View Medicine\nPress 2 Medicine Inventory(Admin)\nPress 3 Order Medicine\nPress 4 Add Medicine(Admin)\nPress 5 Logout\n");
                             if (mainFuntion.equals("1")) {
                                 System.out.println("\n-----------------------**************************LIST OF MEDICINES**************************---------------------------\n");
                                 System.out.println("\n ****************************************************MEDICINE FOR COUGH*************************************************\n");

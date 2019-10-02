@@ -6,8 +6,16 @@ import java.util.Scanner;
 
 public class Register implements myMethods{
 
-    public List<Account> registered = new ArrayList<Account>();
-    public Scanner user = new Scanner(System.in);
+    private List<Account> registered = new ArrayList<Account>();
+    Scanner user = new Scanner(System.in);
+
+    public List<Account> getRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(List<Account> registered) {
+        this.registered = registered;
+    }
 
     public void addUser(Account acc) {
         registered.add(acc);
