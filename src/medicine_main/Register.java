@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Register implements myMethods{
+public class Register implements myMethods {
 
     private List<Account> registered = new ArrayList<Account>();
     Scanner user = new Scanner(System.in);
+    private Account acc;
 
     public List<Account> getRegistered() {
         return registered;
@@ -20,7 +21,7 @@ public class Register implements myMethods{
     public void addUser(Account acc) {
         registered.add(acc);
     }
-    
+
     @Override
     public String input(String label) {
         System.out.print(label + ": ");
@@ -51,7 +52,16 @@ public class Register implements myMethods{
         String Username = input("UserName");
         String Password = input("Password");
         System.out.println("");
-        addUser(new Account(addRole(role), firstName, lastName, Age, Username, Password));
+        for (int i = 0; i < registered.size(); ++i) {
+            if (Username.equals(getRegistered().get(i).getUsername())) {
+                System.out.println("Username is already in used!!!\n");
+                break;
+            }else{
+                addUser(new Account(addRole(role), firstName, lastName, Age, Username, Password));
+                System.out.println("\nAccount created!!!\n");
+                break;
+            }
+        }
     }
 
 }

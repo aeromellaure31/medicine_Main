@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MedStorage {
-    private  List<Medicine> med = new ArrayList<Medicine>();
+    private  List<Medicine> medStorage = new ArrayList<Medicine>();
 
-    public List<Medicine> getMed() {
-        return med;
+    public List<Medicine> getMedStorage() {
+        return medStorage;
     }
 
-    public void setMed(List<Medicine> med) {
-        this.med = med;
+    public void setMedStorage(List<Medicine> medStorage) {
+        this.medStorage = medStorage;
     }
     
     public void storeMedicine(Medicine medicine){
-        med.add(medicine);
+        medStorage.add(medicine);
     }
 }
