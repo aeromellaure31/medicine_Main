@@ -249,17 +249,17 @@ public class Pharmacy extends MedStorage implements myMethods {
                                         String order = input("Medicine's Name");
                                         int orderNum = inputInt("Quantity");
                                         payable(orderNum, order);
-                                        if (orderNum <= medQuantity.get(order)) {
-                                            if (medQuantity.containsKey(order)) {
+                                        if (medQuantity.containsKey(order)) {
+                                            if (orderNum <= medQuantity.get(order)) {
                                                 medQuantity.replace(order, medQuantity.get(order) - orderNum);
                                                 System.out.println("\nYou're order will be delivered soonest!");
                                                 showPurchase(order);
                                             } else {
-                                                System.out.println("Can't find Medicine name");
-                                                System.out.println("-------------------------------------------");
+                                                System.out.println("Insufficient medicine!!!");
                                             }
                                         } else {
-                                            System.out.println("Insufficient medicine!!!");
+                                            System.out.println("Can't find Medicine name");
+                                            System.out.println("-------------------------------------------");
                                         }
 
                                     }
@@ -268,7 +268,7 @@ public class Pharmacy extends MedStorage implements myMethods {
                                 } else if (mainFuntion.equals("5")) {
                                     if (account.getAge() < 18) {
                                         System.out.println("\nYou can only View Medicine");
-                                    }else{
+                                    } else {
                                         viewOrder();
                                     }
                                 } else if (mainFuntion.equals("6")) {
