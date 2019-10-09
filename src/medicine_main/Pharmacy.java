@@ -183,7 +183,7 @@ public class Pharmacy extends MedStorage implements myMethods {
         register.addUser(new Account("Costumer", "Aero", "Laure", 20, "aero", "mel"));
         register.addUser(new Account("Admin", "Aero", "Laure", 20, "admin", "admin"));
         for (int i = 0; i < getMedStorage().size(); ++i) {
-            medQuantity.put(getMedStorage().get(i).getMedDiscription(), 12);
+            medQuantity.put(getMedStorage().get(i).getMedDiscription(), 50);
         }
     }
 
@@ -244,36 +244,48 @@ public class Pharmacy extends MedStorage implements myMethods {
                                     if (account.getAge() < 18) {
                                         System.out.println("\nYou can only View Medicine");
                                     } else {
+                                        System.out.println("\nTo purchase Follow how the medicine is being written *****Thank You*****");
                                         System.out.println("\n--------------------------Order Now----------------------\n");
                                         String order = input("Medicine's Name");
                                         int orderNum = inputInt("Quantity");
                                         payable(orderNum, order);
-                                        if (medQuantity.containsKey(order)) {
-                                            medQuantity.replace(order, medQuantity.get(order) - orderNum);
-                                            System.out.println("\nYou're order will be delivered soonest!");
-                                            showPurchase(order);
+                                        if (orderNum <= medQuantity.get(order)) {
+                                            if (medQuantity.containsKey(order)) {
+                                                medQuantity.replace(order, medQuantity.get(order) - orderNum);
+                                                System.out.println("\nYou're order will be delivered soonest!");
+                                                showPurchase(order);
+                                            } else {
+                                                System.out.println("Can't find Medicine name");
+                                                System.out.println("-------------------------------------------");
+                                            }
                                         } else {
-                                            System.out.println("Can't find Medicine name");
-                                            System.out.println("-------------------------------------------");
+                                            System.out.println("Insufficient medicine!!!");
                                         }
+
                                     }
                                 } else if (mainFuntion.equals("4")) {
                                     addMedicine();
                                 } else if (mainFuntion.equals("5")) {
-                                    viewOrder();
+                                    if (account.getAge() < 18) {
+                                        System.out.println("\nYou can only View Medicine");
+                                    }else{
+                                        viewOrder();
+                                    }
                                 } else if (mainFuntion.equals("6")) {
                                     deleteMedicine();
                                 } else if (mainFuntion.equals("7")) {
                                     mainFuntion = "7";
-                                    if (account.getAge() < 60) {
+                                    if (account.getAge() < 65) {
                                         printReceipt();
+                                        payables = 0;
                                         break;
                                     } else {
                                         printReceiptDiscounted();
+                                        payables = 0;
                                         break;
                                     }
                                 } else {
-                                    System.out.println("Invalid");
+                                    System.out.println("Invalid input");
 
                                 }
                             }

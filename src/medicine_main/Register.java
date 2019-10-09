@@ -45,7 +45,7 @@ public class Register implements myMethods {
 
     public void toRegister() {
         System.out.println("\n-----------REGISTER ACCOUNT--------------\n");
-        String role = input("Press 1 for Admin\nPress any key Costumer\n");
+        String role = input("Press any key for Costumer\n");
         String firstName = input("FirstName");
         String lastName = input("LastName");
         int Age = inputInt("Age");
