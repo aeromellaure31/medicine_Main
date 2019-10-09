@@ -240,9 +240,9 @@ public class Pharmacy extends MedStorage implements myMethods {
                     System.out.println("");
 
                     for (int i = 0; i < register.getRegistered().size(); ++i) {
-                        account = register.getRegistered().get(i);
+                        account = register.getRegistered().get(i); 
                         if (LoginuserName.equals(account.getUsername()) && LoginpassWord.equals(account.getPassword())) {
-                            if (account.getRole().equals("Admin")) {
+                            if (account.getRole().equalsIgnoreCase("Admin")) {
                                 System.out.println("Welcome to Laure's Medic " + account.getFirstname());
                                 String mainFuntion = "0";
                                 while (mainFuntion != "7") {
