@@ -16,9 +16,18 @@ public class Pharmacy extends MedStorage implements myMethods {
     private double payables = 0;
     private Register register = new Register();
     private List<Medicine> receipt = new ArrayList<Medicine>();
+//    private List<Medicine> allMedicine = new ArrayList<Medicine>();
     private HashMap<String, Integer> medQuantity = new HashMap<String, Integer>();
     private Scanner user = new Scanner(System.in);
     private Medicine medicine;
+
+//    public List<Medicine> getAllMedicine() {
+//        return allMedicine;
+//    }
+//
+//    public void setAllMedicine(List<Medicine> allMedicine) {
+//        this.allMedicine = allMedicine;
+//    }
 
     public Account getAccount() {
         return account;
@@ -141,6 +150,15 @@ public class Pharmacy extends MedStorage implements myMethods {
         System.out.println("\n**********************************************************************************************************************************\n");
     }
 
+//    public void showAllPurchase() {
+//        System.out.println("\n-----------------------------------------------------All Orders------------------------------------------------");
+//        System.out.printf("%30s %5s %20s %5s %20s %5s %15s %5s %15s %5s", "Medicine Name", "|", "Brand Name", "|", "Generic Name", "|", "Price", "|", "Quantity", "\n");
+//        for (int i = 0; i < allMedicine.size(); ++i) {
+//            System.out.println(allMedicine.get(i));
+//        }
+//        System.out.println("\n**********************************************************************************************************************************\n");
+//    }
+
     public void payable(int orderNum, String order) {
         for (int i = 0; i < getMedStorage().size() - 1; ++i) {
             if (getMedStorage().get(i).getMedDiscription().equals(order)) {
@@ -224,69 +242,135 @@ public class Pharmacy extends MedStorage implements myMethods {
                     for (int i = 0; i < register.getRegistered().size(); ++i) {
                         account = register.getRegistered().get(i);
                         if (LoginuserName.equals(account.getUsername()) && LoginpassWord.equals(account.getPassword())) {
-                            System.out.println("Welcome to Laure's Medic " + account.getFirstname());
-                            String mainFuntion = "0";
-                            while (mainFuntion != "7") {
-                                mainFuntion = input("\n\nPress 1 View Medicine\nPress 2 Medicine Inventory(Admin)\nPress 3 Order Medicine\nPress 4 Add Medicine(Admin)\nPress 5 View Order\nPress 6 Delete Medicine(Admin)\nPress 7 Logout\n");
-                                if (mainFuntion.equals("1")) {
-                                    System.out.println("\n-----------------------**************************LIST OF MEDICINES**************************---------------------------\n");
-                                    System.out.println("\n ****************************************************MEDICINE FOR COUGH*************************************************\n");
-                                    show("cough");
-                                    System.out.println("\n ****************************************************MEDICINE FOR ALLERGIES*************************************************\n");
-                                    show("Allergies");
-                                    System.out.println("\n ****************************************************MEDICINE FOR BODY PAIN*************************************************\n");
-                                    show("Body Pain");
-                                    System.out.println("\n ****************************************************MEDICINE FOR HEADACHE*************************************************\n");
-                                    show("Headache");
-                                } else if (mainFuntion.equals("2")) {
-                                    inventory();
-                                } else if (mainFuntion.equals("3")) {
-                                    if (account.getAge() < 18) {
-                                        System.out.println("\nYou can only View Medicine");
-                                    } else {
-                                        System.out.println("\nTo purchase Follow how the medicine is being written *****Thank You*****");
-                                        System.out.println("\n--------------------------Order Now----------------------\n");
-                                        String order = input("Medicine's Name");
-                                        int orderNum = inputInt("Quantity");
-                                        payable(orderNum, order);
-                                        if (medQuantity.containsKey(order)) {
-                                            if (orderNum <= medQuantity.get(order)) {
-                                                medQuantity.replace(order, medQuantity.get(order) - orderNum);
-                                                System.out.println("\nYou're order will be delivered soonest!");
-                                                showPurchase(order);
-                                            } else {
-                                                System.out.println("Insufficient medicine!!!");
-                                            }
+                            if (account.getRole().equals("Admin")) {
+                                System.out.println("Welcome to Laure's Medic " + account.getFirstname());
+                                String mainFuntion = "0";
+                                while (mainFuntion != "7") {
+                                    mainFuntion = input("\n\nPress 1 View Medicine\nPress 2 Medicine Inventory\nPress 3 Order Medicine\nPress 4 Add Medicine\nPress 5 View Order\nPress 6 Delete Medicine\nPress 7 Logout\n");
+                                    if (mainFuntion.equals("1")) {
+                                        System.out.println("\n-----------------------**************************LIST OF MEDICINES**************************---------------------------\n");
+                                        System.out.println("\n ****************************************************MEDICINE FOR COUGH*************************************************\n");
+                                        show("cough");
+                                        System.out.println("\n ****************************************************MEDICINE FOR ALLERGIES*************************************************\n");
+                                        show("Allergies");
+                                        System.out.println("\n ****************************************************MEDICINE FOR BODY PAIN*************************************************\n");
+                                        show("Body Pain");
+                                        System.out.println("\n ****************************************************MEDICINE FOR HEADACHE*************************************************\n");
+                                        show("Headache");
+                                    } else if (mainFuntion.equals("2")) {
+                                        inventory();
+                                    } else if (mainFuntion.equals("3")) {
+                                        if (account.getAge() < 18) {
+                                            System.out.println("\nYou can only View Medicine");
                                         } else {
-                                            System.out.println("Can't find Medicine name");
-                                            System.out.println("-------------------------------------------");
+                                            System.out.println("\nTo purchase Follow how the medicine is being written *****Thank You*****");
+                                            System.out.println("\n--------------------------Order Now----------------------\n");
+                                            String order = input("Medicine's Name");
+                                            int orderNum = inputInt("Quantity");
+                                            payable(orderNum, order);
+                                            if (medQuantity.containsKey(order)) {
+                                                if (orderNum <= medQuantity.get(order)) {
+                                                    medQuantity.replace(order, medQuantity.get(order) - orderNum);
+                                                    System.out.println("\nYou're order will be delivered soonest!");
+                                                    showPurchase(order);
+//                                                    for (int z = 0; z < getMedStorage().size(); ++z) {
+//                                                        Medicine med = getMedStorage().get(z);
+//                                                        if (order.equals(med.getMedDiscription())) {
+//                                                            allMedicine.add(med);
+//                                                        }
+//                                                    }
+                                                } else {
+                                                    System.out.println("Insufficient medicine!!!");
+                                                }
+                                            } else {
+                                                System.out.println("Can't find Medicine name");
+                                                System.out.println("-------------------------------------------");
+                                            }
                                         }
+                                    } else if (mainFuntion.equals("4")) {
+                                        addMedicine();
+                                    } else if (mainFuntion.equals("5")) {
+                                        if (account.getAge() < 18) {
+                                            System.out.println("\nYou can only View Medicine");
+                                        } else {
+                                            viewOrder();
+                                        }
+                                    } else if (mainFuntion.equals("6")) {
+                                        deleteMedicine();
+                                    } else if (mainFuntion.equals("7")) {
+                                        mainFuntion = "7";
+                                        if (account.getAge() < 65) {
+                                            printReceipt();
+                                            payables = 0;
+                                            break;
+                                        } else {
+                                            printReceiptDiscounted();
+                                            payables = 0;
+                                            break;
+                                        }
+                                    } else {
+                                        System.out.println("Invalid input");
 
                                     }
-                                } else if (mainFuntion.equals("4")) {
-                                    addMedicine();
-                                } else if (mainFuntion.equals("5")) {
-                                    if (account.getAge() < 18) {
-                                        System.out.println("\nYou can only View Medicine");
+                                }
+                            } else {
+                                System.out.println("Welcome to Laure's Medic " + account.getFirstname());
+                                String mainFuntion = "0";
+                                while (mainFuntion != "4") {
+                                    mainFuntion = input("\n\nPress 1 View Medicine\nPress 2 Order Medicine\nPress 3 View Order\nPress 4 Logout\n");
+                                    if (mainFuntion.equals("1")) {
+                                        System.out.println("\n-----------------------**************************LIST OF MEDICINES**************************---------------------------\n");
+                                        System.out.println("\n ****************************************************MEDICINE FOR COUGH*************************************************\n");
+                                        show("cough");
+                                        System.out.println("\n ****************************************************MEDICINE FOR ALLERGIES*************************************************\n");
+                                        show("Allergies");
+                                        System.out.println("\n ****************************************************MEDICINE FOR BODY PAIN*************************************************\n");
+                                        show("Body Pain");
+                                        System.out.println("\n ****************************************************MEDICINE FOR HEADACHE*************************************************\n");
+                                        show("Headache");
+                                    } else if (mainFuntion.equals("2")) {
+                                        if (account.getAge() < 18) {
+                                            System.out.println("\nYou can only View Medicine");
+                                        } else {
+                                            System.out.println("\nTo purchase Follow how the medicine is being written *****Thank You*****");
+                                            System.out.println("\n--------------------------Order Now----------------------\n");
+                                            String order = input("Medicine's Name");
+                                            int orderNum = inputInt("Quantity");
+                                            payable(orderNum, order);
+                                            if (medQuantity.containsKey(order)) {
+                                                if (orderNum <= medQuantity.get(order)) {
+                                                    medQuantity.replace(order, medQuantity.get(order) - orderNum);
+                                                    System.out.println("\nYou're order will be delivered soonest!");
+                                                    showPurchase(order);
+                                                } else {
+                                                    System.out.println("Insufficient medicine!!!");
+                                                }
+                                            } else {
+                                                System.out.println("Can't find Medicine name");
+                                                System.out.println("-------------------------------------------");
+                                            }
+                                        }
+                                    } else if (mainFuntion.equals("3")) {
+                                        if (account.getAge() < 18) {
+                                            System.out.println("\nYou can only View Medicine");
+                                        } else {
+                                            viewOrder();
+                                        }
+                                    } else if (mainFuntion.equals("4")) {
+                                        mainFuntion = "4";
+                                        if (account.getAge() < 65) {
+                                            printReceipt();
+                                            payables = 0;
+                                            break;
+                                        } else {
+                                            printReceiptDiscounted();
+                                            payables = 0;
+                                            break;
+                                        }
                                     } else {
-                                        viewOrder();
-                                    }
-                                } else if (mainFuntion.equals("6")) {
-                                    deleteMedicine();
-                                } else if (mainFuntion.equals("7")) {
-                                    mainFuntion = "7";
-                                    if (account.getAge() < 65) {
-                                        printReceipt();
-                                        payables = 0;
-                                        break;
-                                    } else {
-                                        printReceiptDiscounted();
-                                        payables = 0;
-                                        break;
-                                    }
-                                } else {
-                                    System.out.println("Invalid input");
+                                        System.out.println("Invalid input");
 
+                                    }
                                 }
                             }
                             break;

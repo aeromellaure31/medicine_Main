@@ -2,50 +2,75 @@
 package medicine_main;
 
 public class Medicine {
-    private String MedDiscription;
-    private String GenericName;
-    private String BrandName;
-    private double Medprice;
+    private String medName;
+    private String genericName;
+    private String brandName;
+    private double medPrice;
     private String illness;
+    private int quantity;
 
     public Medicine( String MedDiscription,String GenericName, String BrandName, double Medprice, String illness) {
-        this.GenericName = GenericName;
-        this.BrandName = BrandName;
-        this.MedDiscription = MedDiscription;
-        this.Medprice = Medprice;
+        this.genericName = GenericName;
+        this.brandName = BrandName;
+        this.medName = MedDiscription;
+        this.medPrice = Medprice;
         this.illness = illness;
     } 
 
+    public String getMedName() {
+        return medName;
+    }
+
+    public void setMedName(String medName) {
+        this.medName = medName;
+    }
+
+    public double getMedPrice() {
+        return medPrice;
+    }
+
+    public void setMedPrice(double medPrice) {
+        this.medPrice = medPrice;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public String getGenericName() {
-        return GenericName;
+        return genericName;
     }
 
     public void setGenericName(String GenericName) {
-        this.GenericName = GenericName;
+        this.genericName = GenericName;
     }
 
     public String getBrandName() {
-        return BrandName;
+        return brandName;
     }
 
     public void setBrandName(String BrandName) {
-        this.BrandName = BrandName;
+        this.brandName = BrandName;
     }
 
     public String getMedDiscription() {
-        return MedDiscription;
+        return medName;
     }
 
     public void setMedDiscription(String MedDiscription) {
-        this.MedDiscription = MedDiscription;
+        this.medName = MedDiscription;
     }
 
     public double getMedprice() {
-        return Medprice;
+        return medPrice;
     }
 
     public void setMedprice(double Medprice) {
-        this.Medprice = Medprice;
+        this.medPrice = Medprice;
     }
 
     public String getIllness() {
@@ -55,10 +80,13 @@ public class Medicine {
     public void setIllness(String illness) {
         this.illness = illness;
     }
+    
+    public String order(){
+        return String.format("%30s %5s %20s %5s %20s %5s %15s %5s", medName,"|", genericName,"|", brandName,"|",quantity, "\n");
+    }
 
     @Override
     public String toString() {
-        return String.format("%30s %5s %20s %5s %20s %5s %15s %5s", MedDiscription,"|", GenericName,"|", BrandName,"|",Medprice, "\n");
-        
+        return String.format("%30s %5s %20s %5s %20s %5s %15s %5s", medName,"|", genericName,"|", brandName,"|",medPrice, "\n");
     }
 }

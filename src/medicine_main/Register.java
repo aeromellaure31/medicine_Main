@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Register implements myMethods {
-
     private List<Account> registered = new ArrayList<Account>();
     Scanner user = new Scanner(System.in);
     private Account acc;
