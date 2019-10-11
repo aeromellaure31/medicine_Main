@@ -146,7 +146,6 @@ public class Pharmacy extends MedStorage implements myMethods {
                 System.out.println(current);
                 receipt.add(current);
             }
-            
 
         }
         System.out.println("\n**********************************************************************************************************************************\n");
@@ -172,7 +171,7 @@ public class Pharmacy extends MedStorage implements myMethods {
     public void printReceipt() {
         if (!receipt.isEmpty()) {
             System.out.println("----------------------Receipt------------------------");
-            System.out.printf("%s %34s","Medicine Name","Quantity Ordered\n\n");
+            System.out.printf("%s %34s", "Medicine Name", "Quantity Ordered\n\n");
             for (int i = 0; i < receipt.size(); ++i) {
                 System.out.printf("%s %30s", receipt.get(i).getMedName(), list.get(i));
                 System.out.println("");
@@ -188,7 +187,7 @@ public class Pharmacy extends MedStorage implements myMethods {
     public void printReceiptDiscounted() {
         if (!receipt.isEmpty()) {
             System.out.println("----------------------Receipt------------------------");
-            System.out.printf("%s %34s","Medicine Name","Quantity Ordered\n\n");
+            System.out.printf("%s %34s", "Medicine Name", "Quantity Ordered\n\n");
             for (int i = 0; i < receipt.size(); ++i) {
                 System.out.printf("%s %30s", receipt.get(i).getMedName(), list.get(i));
                 System.out.println("");
@@ -249,7 +248,7 @@ public class Pharmacy extends MedStorage implements myMethods {
                         account = register.getRegistered().get(i);
                         if (LoginuserName.equals(account.getUsername()) && LoginpassWord.equals(account.getPassword())) {
                             if (account.getRole().equalsIgnoreCase("Admin")) {
-                                System.out.println("Welcome to Laure's Medic " + account.getFirstname());
+                                System.out.println("Welcome pharmacist " + account.getFirstname());
                                 String mainFuntion = "0";
                                 while (mainFuntion != "7") {
                                     mainFuntion = input("\n\nPress 1 View Medicine\nPress 2 Medicine Inventory\nPress 3 Order Medicine\nPress 4 Add Medicine\nPress 5 View Order\nPress 6 Delete Medicine\nPress 7 Logout\n");
@@ -399,87 +398,3 @@ public class Pharmacy extends MedStorage implements myMethods {
         }
     }
 }
-
-//            }
-//            if (choice.equals("1")) {
-//                register.toRegister();
-//            } else if (choice.equals("2")) {
-//                System.out.println("\n-----------LOGIN ACCOUNT--------------\n");
-//                String LoginuserName = input("Username");
-//                String LoginpassWord = input("Password");
-//                System.out.println("");
-//
-//                for (int i = 0; i < register.getRegistered().size(); ++i) {
-//                    account = register.getRegistered().get(i);
-//                    if (LoginuserName.equals(account.getUsername()) && LoginpassWord.equals(account.getPassword())) {
-//                        System.out.println("Welcome to Laure's Medic " + account.getFirstname());
-//                        currentUser = account;
-//                        String mainFuntion = "0";
-//                        while (mainFuntion != "5") {
-//                            mainFuntion = input("\n\nPress 1 View Medicine\nPress 2 Medicine Inventory(Admin)\nPress 3 Order Medicine\nPress 4 Add Medicine(Admin)\nPress 5 Logout\n");
-//                            if (mainFuntion.equals("1")) {
-//                                System.out.println("\n-----------------------**************************LIST OF MEDICINES**************************---------------------------\n");
-//                                System.out.println("\n ****************************************************MEDICINE FOR COUGH*************************************************\n");
-//                                show("cough");
-//                                System.out.println("\n ****************************************************MEDICINE FOR ALLERGIES*************************************************\n");
-//                                show("Allergies");
-//                                System.out.println("\n ****************************************************MEDICINE FOR BODY PAIN*************************************************\n");
-//                                show("Body Pain");
-//                                System.out.println("\n ****************************************************MEDICINE FOR HEADACHE*************************************************\n");
-//                                show("Headache");
-//                            } else if (mainFuntion.equals("2")) {
-//                                if (account.getRole().equalsIgnoreCase("Admin")) {
-//                                    System.out.println("------------------------------------INVENTORY----------------------------------\n");
-//                                    quantity.forEach((k, v) -> System.out.println("Medicine: " + k + "\twith Quantity:" + v + "\n"));
-//                                    System.out.println("-------------------------------------------------------------------------------\n");
-//                                } else {
-//                                    System.out.println("\nUnauthorized\n");
-//                                    System.out.println("-----------------------------------------------------------\n");
-//                                }
-//                            } else if (mainFuntion.equals("3")) {
-//                                if (currentUser.getAge() < 18) {
-//                                    System.out.println("\nYou can only View Medicine");
-//                                } else {
-//                                    System.out.println("\n--------------------------Order Now----------------------\n");
-//                                    String order = input("Medicine's Name");
-//                                    int orderNum = inputInt("Quantity");
-//                                    payable(orderNum, order);
-//                                    if (quantity.containsKey(order)) {
-//                                        quantity.replace(order, quantity.get(order) - orderNum);
-//                                        System.out.println("\nYou're order will be delivered soonest!");
-//                                        showPurchase(order);
-//                                    } else {
-//                                        System.out.println("Can't find Medicine name");
-//                                        System.out.println("-------------------------------------------");
-//                                    }
-//                                }
-//                            } else if (mainFuntion.equals("4")) {
-//                                if (account.getRole().equalsIgnoreCase("Admin")) {
-//                                    addMedicine(input("Medicine for: "));
-//                                } else {
-//                                    System.out.println("\nUnauthorized\n");
-//                                    System.out.println("---------------------------------------------------------\n");
-//                                }
-//                            } else if (mainFuntion.equals("5")) {
-//                                mainFuntion = "5";
-//                                if (currentUser.getAge() < 60) {
-//                                    printReceipt();
-//                                    break;
-//                                } else {
-//                                    printReceiptDiscounted();
-//                                    break;
-//                                }
-//                            } else {
-//                                System.out.println("Invalid");
-//                            }
-//                        }
-//                        break;
-//                    }
-//                }
-//            } else if (choice.equals("3")) {
-//                condition = false;
-//                System.out.println("Thank You ----- Come Again");
-//                break;
-//            } else {
-//                System.out.println("\ninvalid input\n");
-
