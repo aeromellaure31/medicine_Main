@@ -56,15 +56,7 @@ public class Medicine {
     public void setBrandName(String BrandName) {
         this.brandName = BrandName;
     }
-
-    public String getMedDiscription() {
-        return medName;
-    }
-
-    public void setMedDiscription(String MedDiscription) {
-        this.medName = MedDiscription;
-    }
-
+    
     public double getMedprice() {
         return medPrice;
     }

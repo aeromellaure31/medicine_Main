@@ -20,6 +20,7 @@ public class Pharmacy extends MedStorage implements myMethods {
     private HashMap<String, Integer> medQuantity = new HashMap<String, Integer>();
     private Scanner user = new Scanner(System.in);
     private Medicine medicine;
+    private List list = new ArrayList();
 
 //    public List<Medicine> getAllMedicine() {
 //        return allMedicine;
@@ -28,7 +29,6 @@ public class Pharmacy extends MedStorage implements myMethods {
 //    public void setAllMedicine(List<Medicine> allMedicine) {
 //        this.allMedicine = allMedicine;
 //    }
-
     public Account getAccount() {
         return account;
     }
@@ -112,7 +112,7 @@ public class Pharmacy extends MedStorage implements myMethods {
         if (account.getRole().equalsIgnoreCase("Admin")) {
             String toBeDeleted = (input("\nMedicine name to be delete: "));
             for (int i = 0; i < getMedStorage().size(); ++i) {
-                if (toBeDeleted.equals(getMedStorage().get(i).getMedDiscription())) {
+                if (toBeDeleted.equals(getMedStorage().get(i).getMedName())) {
                     getMedStorage().remove(getMedStorage().indexOf(getMedStorage().get(i)));
                     System.out.println("\nMedicine deleted!!!\n");
                 }
@@ -142,10 +142,12 @@ public class Pharmacy extends MedStorage implements myMethods {
         System.out.printf("%30s %5s %20s %5s %20s %5s %15s %5s", "Medicine Name", "|", "Brand Name", "|", "Generic Name", "|", "Price", "\n");
         for (int i = 0; i < getMedStorage().size(); ++i) {
             Medicine current = getMedStorage().get(i);
-            if (current.getMedDiscription().equalsIgnoreCase(name)) {
-                receipt.add(current);
+            if (current.getMedName().equalsIgnoreCase(name)) {
                 System.out.println(current);
+                receipt.add(current);
             }
+            
+
         }
         System.out.println("\n**********************************************************************************************************************************\n");
     }
@@ -158,10 +160,9 @@ public class Pharmacy extends MedStorage implements myMethods {
 //        }
 //        System.out.println("\n**********************************************************************************************************************************\n");
 //    }
-
     public void payable(int orderNum, String order) {
         for (int i = 0; i < getMedStorage().size() - 1; ++i) {
-            if (getMedStorage().get(i).getMedDiscription().equals(order)) {
+            if (getMedStorage().get(i).getMedName().equals(order)) {
                 payables += ((getMedStorage().get(i).getMedprice() * orderNum));
             }
         }
@@ -170,30 +171,35 @@ public class Pharmacy extends MedStorage implements myMethods {
 
     public void printReceipt() {
         if (!receipt.isEmpty()) {
-            System.out.println("-----------------------------------------------------Receipt------------------------------------------------");
-            System.out.printf("%30s %5s %20s %5s %20s %5s %15s %5s", "Medicine Name", "|", "Brand Name", "|", "Generic Name", "|", "Price", "\n");
+            System.out.println("----------------------Receipt------------------------");
+            System.out.printf("%s %34s","Medicine Name","Quantity Ordered\n\n");
             for (int i = 0; i < receipt.size(); ++i) {
-                System.out.println(receipt.get(i));
+                System.out.printf("%s %30s", receipt.get(i).getMedName(), list.get(i));
+                System.out.println("");
             }
             receipt.clear();
             System.out.println("\nTotal Payables(Pesos): " + payables);
             System.out.println("------------------------------------END OF TRANSACTION  |||||326548445678----------------------------------------------------\n");
         } else {
-            System.out.println("Thank You!!!");
+            System.out.println("\nThank You!!!\n");
         }
     }
 
     public void printReceiptDiscounted() {
         if (!receipt.isEmpty()) {
-            System.out.println("\n-----------------------------------------------------Receipt------------------------------------------------");
-            System.out.printf("%30s %5s %20s %5s %20s %5s %15s %5s", "Medicine Name", "|", "Brand Name", "|", "Generic Name", "|", "Price", "\n");
+            System.out.println("----------------------Receipt------------------------");
+            System.out.printf("%s %34s","Medicine Name","Quantity Ordered\n\n");
             for (int i = 0; i < receipt.size(); ++i) {
-                System.out.println(receipt.get(i));
+                System.out.printf("%s %30s", receipt.get(i).getMedName(), list.get(i));
+                System.out.println("");
             }
-            System.out.println("\nTotal Payables(Pesos): " + (payables - (payables * 0.20)) + "            -----------discounted");
-            System.out.println("------------------------------------END OF TRANSACTION  |||||9627318467----------------------------------\n\n");
+            receipt.clear();
+            System.out.println("\nPayables(Pesos): " + payables);
+            System.out.println("----------------------------------------\nDiscount: " + (payables * 0.20));
+            System.out.println("----------------------------------------\nTotal Payables(Pesos): " + (payables - (payables * 0.20)));
+            System.out.println("--------------------------------------------END OF TRANSACTION  |||||9627318467------------------------------------------\n\n");
         } else {
-            System.out.println("Thank You!!!");
+            System.out.println("\nThank You!!!\n");
         }
     }
 
@@ -201,7 +207,7 @@ public class Pharmacy extends MedStorage implements myMethods {
         register.addUser(new Account("Costumer", "Aero", "Laure", 20, "aero", "mel"));
         register.addUser(new Account("Admin", "Aero", "Laure", 20, "admin", "admin"));
         for (int i = 0; i < getMedStorage().size(); ++i) {
-            medQuantity.put(getMedStorage().get(i).getMedDiscription(), 50);
+            medQuantity.put(getMedStorage().get(i).getMedName(), 50);
         }
     }
 
@@ -240,7 +246,7 @@ public class Pharmacy extends MedStorage implements myMethods {
                     System.out.println("");
 
                     for (int i = 0; i < register.getRegistered().size(); ++i) {
-                        account = register.getRegistered().get(i); 
+                        account = register.getRegistered().get(i);
                         if (LoginuserName.equals(account.getUsername()) && LoginpassWord.equals(account.getPassword())) {
                             if (account.getRole().equalsIgnoreCase("Admin")) {
                                 System.out.println("Welcome to Laure's Medic " + account.getFirstname());
@@ -270,6 +276,7 @@ public class Pharmacy extends MedStorage implements myMethods {
                                             payable(orderNum, order);
                                             if (medQuantity.containsKey(order)) {
                                                 if (orderNum <= medQuantity.get(order)) {
+                                                    list.add(orderNum);
                                                     medQuantity.replace(order, medQuantity.get(order) - orderNum);
                                                     System.out.println("\nYou're order will be delivered soonest!");
                                                     showPurchase(order);
@@ -302,10 +309,12 @@ public class Pharmacy extends MedStorage implements myMethods {
                                         if (account.getAge() < 65) {
                                             printReceipt();
                                             payables = 0;
+                                            list.clear();
                                             break;
                                         } else {
                                             printReceiptDiscounted();
                                             payables = 0;
+                                            list.clear();
                                             break;
                                         }
                                     } else {
@@ -339,6 +348,7 @@ public class Pharmacy extends MedStorage implements myMethods {
                                             payable(orderNum, order);
                                             if (medQuantity.containsKey(order)) {
                                                 if (orderNum <= medQuantity.get(order)) {
+                                                    list.add(orderNum);
                                                     medQuantity.replace(order, medQuantity.get(order) - orderNum);
                                                     System.out.println("\nYou're order will be delivered soonest!");
                                                     showPurchase(order);
@@ -361,10 +371,12 @@ public class Pharmacy extends MedStorage implements myMethods {
                                         if (account.getAge() < 65) {
                                             printReceipt();
                                             payables = 0;
+                                            list.clear();
                                             break;
                                         } else {
                                             printReceiptDiscounted();
                                             payables = 0;
+                                            list.clear();
                                             break;
                                         }
                                     } else {
